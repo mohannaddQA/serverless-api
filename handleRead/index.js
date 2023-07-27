@@ -1,12 +1,10 @@
 "use strict";
 const dynamoose = require("dynamoose");
-const PeopleModel = require("./people.schema");
+const { PeopleModel } = require("./people.schema");
 
 exports.handler = async (event) => {
-  if (event.pathParameters.id) {
-    let foundPerson = await PeopleModel.scan("id")
-      .eq(event.pathParameters.id)
-      .exec();
+  if (event.pathParameters && event.pathParameters.id) {
+    let foundPerson = await PeopleModel.get(event.pathParameters.id);
     const response = {
       statusCode: 200,
       body: JSON.stringify(foundPerson),

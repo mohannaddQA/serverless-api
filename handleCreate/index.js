@@ -1,6 +1,6 @@
 "use strict";
 const dynamoose = require("dynamoose");
-const PeopleModel = require("./people.schema");
+const { PeopleModel } = require("./people.schema");
 exports.handler = async (event) => {
   if (!event.queryStringParameters) {
     const response = {
@@ -8,8 +8,8 @@ exports.handler = async (event) => {
       body: "please enter the persons information",
     };
   } else {
-    let { name, age } = event.queryStringParameters;
-    let personInfo = { name, age };
+    let { id, name, age } = event.queryStringParameters;
+    let personInfo = { id, name, age };
 
     try {
       const newPerson = await PeopleModel.create(personInfo);
